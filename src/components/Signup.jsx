@@ -17,12 +17,19 @@ function Signup() {
         setError("")
         try {
             // authService ko bolo ki signup ke andar ek acc create karna hai
-            const userData = await authService.createAccount(data)
-            if(userData) {
-                const userData = await authService.getCurrentUser()
-                if(userData) dispatch(login(userData))
-                navigate("/")
+            // const userData = await authService.createAccount(data)
+            // if(userData) {
+            //     const userData = await authService.getCurrentUser()
+            //     if(userData) dispatch(login(userData))
+            //     navigate("/")
+            // }
+            const session = await authService.createAccount(data)
+            if (session) {
+               const currentUser = await authService.getCurrentUser()
+               if (currentUser) dispatch(login(currentUser))
+               navigate("/")
             }
+
 
         } catch (error) {
             setError(error.message)
